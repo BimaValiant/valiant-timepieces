@@ -96,23 +96,23 @@
                     <div>
                         <h3 class="text-xs font-semibold tracking-[0.2em] uppercase text-neutral-300 mb-4 border-b border-neutral-800 pb-2">SPECIFICATIONS</h3>
                         <div class="grid grid-cols-2 gap-4 text-xs">
-                            <div class="bg-[#121212] p-3 rounded border border-neutral-800/50">
-                                <span class="text-[9px] tracking-widest text-neutral-500 uppercase block">CASE SIZE</span>
-                                <span class="text-neutral-200 font-medium">39.5 mm</span>
-                            </div>
-                            <div class="bg-[#121212] p-3 rounded border border-neutral-800/50">
-                                <span class="text-[9px] tracking-widest text-neutral-500 uppercase block">MOVEMENT</span>
-                                <span class="text-neutral-200 font-medium">Solar / Quartz</span>
-                            </div>
-                            <div class="bg-[#121212] p-3 rounded border border-neutral-800/50">
-                                <span class="text-[9px] tracking-widest text-neutral-500 uppercase block">GLASS</span>
-                                <span class="text-neutral-200 font-medium">Sapphire Crystal</span>
-                            </div>
-                            <div class="bg-[#121212] p-3 rounded border border-neutral-800/50">
-                                <span class="text-[9px] tracking-widest text-neutral-500 uppercase block">COMPLETENESS</span>
-                                <span class="text-neutral-200 font-medium">Full Set (Box & Papers)</span>
-                            </div>
-                        </div>
+    <div class="bg-[#121212] p-3 rounded border border-neutral-800/50">
+        <span class="text-[9px] tracking-widest text-neutral-500 uppercase block">CASE SIZE</span>
+        <span class="text-neutral-200 font-medium">{{ $watch->case_size ?? '38 mm' }}</span>
+    </div>
+    <div class="bg-[#121212] p-3 rounded border border-neutral-800/50">
+        <span class="text-[9px] tracking-widest text-neutral-500 uppercase block">MOVEMENT</span>
+        <span class="text-neutral-200 font-medium">{{ $watch->movement ?? 'Automatic' }}</span>
+    </div>
+    <div class="bg-[#121212] p-3 rounded border border-neutral-800/50">
+        <span class="text-[9px] tracking-widest text-neutral-500 uppercase block">GLASS</span>
+        <span class="text-neutral-200 font-medium">{{ $watch->glass ?? 'Sapphire Crystal' }}</span>
+    </div>
+    <div class="bg-[#121212] p-3 rounded border border-neutral-800/50">
+        <span class="text-[9px] tracking-widest text-neutral-500 uppercase block">COMPLETENESS</span>
+        <span class="text-neutral-200 font-medium">{{ $watch->completeness ?? 'Full Set (Box & Papers)' }}</span>
+    </div>
+</div>
                     </div>
 
                     <!-- Checkout & Contact Buttons -->

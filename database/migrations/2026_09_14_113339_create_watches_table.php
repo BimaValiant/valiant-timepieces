@@ -11,7 +11,7 @@ return new class extends Migration
      *
      * @return void
      */
-  public function up(): void
+public function up(): void
 {
     Schema::create('watches', function (Blueprint $table) {
         $table->id();
@@ -23,6 +23,13 @@ return new class extends Migration
         $table->string('condition');
         $table->string('badge')->default('VERIFIED');
         $table->string('image');
+        
+        // Kolom Spesifikasi Dinamis Baru
+        $table->string('case_size')->nullable()->default('38 mm');
+        $table->string('movement')->nullable()->default('Automatic');
+        $table->string('glass')->nullable()->default('Sapphire Crystal');
+        $table->string('completeness')->nullable()->default('Full Set (Box & Papers)');
+        
         $table->timestamps();
     });
 }
