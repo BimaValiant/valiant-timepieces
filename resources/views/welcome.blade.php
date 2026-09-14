@@ -8,7 +8,7 @@
     <!-- Vite / Tailwind -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <!-- TAILWIND CSS CDN (Tambahkan baris ini biar CSS-nya langsung jalan 100%) -->
+    <!-- TAILWIND CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -16,7 +16,7 @@
       }
     </script>
 
-    <!-- Google Fonts -->
+    <!-- Google Fonts: Cormorant Garamond & Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,500;1,600&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -44,7 +44,7 @@
         <div class="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 h-20 flex items-center justify-between">
             
             <!-- Logo -->
-            <a href="#" class="flex items-center gap-3">
+            <a href="{{ route('home') }}" class="flex items-center gap-3">
                 <div class="w-7 h-7 rounded-full border border-neutral-700/80 flex items-center justify-center text-xs font-serif italic text-[#CBB299]">V</div>
                 <div class="flex flex-col">
                     <span class="tracking-[0.25em] text-[11px] font-bold uppercase text-white leading-tight">VALIANT</span>
@@ -61,8 +61,8 @@
 
             <!-- Desktop Action Buttons -->
             <div class="hidden sm:flex items-center gap-3">
-                <a href="#" class="px-5 py-2.5 rounded-full border border-neutral-800 text-[10px] font-semibold tracking-[0.15em] uppercase text-neutral-300 hover:border-neutral-600 transition">SIGN IN</a>
-                <a href="#" class="px-5 py-2.5 rounded-full bg-[#CBB299] text-black text-[10px] font-semibold tracking-[0.15em] uppercase hover:bg-[#d8c3ad] transition">SELL A WATCH</a>
+                <a href="{{ route('login') }}" class="px-5 py-2.5 rounded-full border border-neutral-800 text-[10px] font-semibold tracking-[0.15em] uppercase text-neutral-300 hover:border-neutral-600 transition">SIGN IN</a>
+                <a href="https://wa.me/6281234567890?text=Halo%20Valiant%20Timepieces,%20saya%20mau%20titip%20jual%20jam%20tangan." target="_blank" class="px-5 py-2.5 rounded-full bg-[#CBB299] text-black text-[10px] font-semibold tracking-[0.15em] uppercase hover:bg-[#d8c3ad] transition">SELL A WATCH</a>
             </div>
 
             <!-- Mobile Hamburger Button -->
@@ -78,8 +78,8 @@
             <a href="#standard" @click="mobileMenu = false" class="block text-xs font-semibold tracking-[0.2em] uppercase text-neutral-300">HOW IT WORKS</a>
             <a href="#" class="block text-xs font-semibold tracking-[0.2em] uppercase text-neutral-300">JOURNAL</a>
             <div class="pt-4 border-t border-neutral-800 flex flex-col gap-3">
-                <a href="#" class="text-center w-full py-2.5 rounded-full border border-neutral-800 text-[10px] font-semibold tracking-[0.15em] uppercase text-neutral-300">SIGN IN</a>
-                <a href="#" class="text-center w-full py-2.5 rounded-full bg-[#CBB299] text-black text-[10px] font-semibold tracking-[0.15em] uppercase">SELL A WATCH</a>
+                <a href="{{ route('login') }}" class="text-center w-full py-2.5 rounded-full border border-neutral-800 text-[10px] font-semibold tracking-[0.15em] uppercase text-neutral-300">SIGN IN</a>
+                <a href="https://wa.me/6281234567890?text=Halo%20Valiant%20Timepieces,%20saya%20mau%20titip%20jual%20jam%20tangan." target="_blank" class="text-center w-full py-2.5 rounded-full bg-[#CBB299] text-black text-[10px] font-semibold tracking-[0.15em] uppercase">SELL A WATCH</a>
             </div>
         </div>
     </header>
@@ -171,89 +171,36 @@
                     <button class="px-4 py-1.5 rounded-full border border-neutral-800 bg-[#121212] hover:border-neutral-600 text-neutral-300 text-[10px] font-medium uppercase tracking-widest shrink-0 transition">ALBA</button>
                     <button class="px-4 py-1.5 rounded-full border border-neutral-800 bg-[#121212] hover:border-neutral-600 text-neutral-300 text-[10px] font-medium uppercase tracking-widest shrink-0 transition">ORIENT</button>
                 </div>
-                <span class="text-[10px] tracking-widest text-neutral-500 uppercase whitespace-nowrap shrink-0">8 RESULTS</span>
+                <span class="text-[10px] tracking-widest text-neutral-500 uppercase whitespace-nowrap shrink-0">{{ count($watches) }} RESULTS</span>
             </div>
 
-            <!-- PRODUCT GRID (Responsive: 1 col on mobile, 2 on tablet, 4 on desktop) -->
+            <!-- DYNAMIC PRODUCT GRID -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                
-                <!-- Item Card 1 -->
-                <div class="group cursor-pointer">
-                    <div class="relative bg-[#121212] aspect-[4/5] rounded overflow-hidden border border-neutral-800/80 mb-3">
-                        <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=800&auto=format&fit=crop" alt="Watch" class="w-full h-full object-cover object-center group-hover:scale-105 transition duration-500">
-                        <span class="absolute top-3 left-3 bg-neutral-950/90 text-white text-[8px] font-bold px-2 py-1 rounded tracking-widest uppercase border border-neutral-800">FEATURED</span>
-                        <button class="absolute top-3 right-3 text-neutral-400 hover:text-white p-1"><i data-lucide="heart" class="w-4 h-4"></i></button>
-                    </div>
-                    <div class="flex justify-between items-start mb-0.5">
-                        <span class="text-[10px] tracking-[0.2em] text-neutral-400 uppercase">SEIKO</span>
-                        <span class="text-xs font-semibold text-white">Rp 3.850.000</span>
-                    </div>
-                    <h3 class="text-xs sm:text-sm font-medium text-white mb-0.5 group-hover:text-[#CBB299] transition">Prospex Speedtimer</h3>
-                    <p class="text-[10px] text-neutral-500 mb-2">SSC813 / 2024</p>
-                    <div class="flex items-center gap-3 text-[9px] tracking-wider uppercase text-neutral-400">
-                        <span>UNWORN</span>
-                        <span class="flex items-center gap-1 text-neutral-300"><i data-lucide="check-circle" class="w-3 h-3 text-[#CBB299]"></i> VERIFIED</span>
-                    </div>
-                </div>
-
-                <!-- Item Card 2 -->
-                <div class="group cursor-pointer">
-                    <div class="relative bg-[#121212] aspect-[4/5] rounded overflow-hidden border border-neutral-800/80 mb-3">
-                        <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=800&auto=format&fit=crop" alt="Watch" class="w-full h-full object-cover object-center group-hover:scale-105 transition duration-500">
-                        <span class="absolute top-3 left-3 bg-neutral-950/90 text-white text-[8px] font-bold px-2 py-1 rounded tracking-widest uppercase border border-neutral-800">VERIFIED</span>
-                        <button class="absolute top-3 right-3 text-neutral-400 hover:text-white p-1"><i data-lucide="heart" class="w-4 h-4"></i></button>
-                    </div>
-                    <div class="flex justify-between items-start mb-0.5">
-                        <span class="text-[10px] tracking-[0.2em] text-neutral-400 uppercase">G-SHOCK</span>
-                        <span class="text-xs font-semibold text-white">Rp 1.950.000</span>
-                    </div>
-                    <h3 class="text-xs sm:text-sm font-medium text-white mb-0.5 group-hover:text-[#CBB299] transition">CasiOak Metal Covered</h3>
-                    <p class="text-[10px] text-neutral-500 mb-2">GM-2100-1A / 2023</p>
-                    <div class="flex items-center gap-3 text-[9px] tracking-wider uppercase text-neutral-400">
-                        <span>EXCELLENT</span>
-                        <span class="flex items-center gap-1 text-neutral-300"><i data-lucide="check-circle" class="w-3 h-3 text-[#CBB299]"></i> VERIFIED</span>
-                    </div>
-                </div>
-
-                <!-- Item Card 3 -->
-                <div class="group cursor-pointer">
-                    <div class="relative bg-[#121212] aspect-[4/5] rounded overflow-hidden border border-neutral-800/80 mb-3">
-                        <img src="https://images.unsplash.com/photo-1539185441755-769473a23570?q=80&w=800&auto=format&fit=crop" alt="Watch" class="w-full h-full object-cover object-center group-hover:scale-105 transition duration-500">
-                        <span class="absolute top-3 left-3 bg-neutral-950/90 text-white text-[8px] font-bold px-2 py-1 rounded tracking-widest uppercase border border-neutral-800">TRENDING</span>
-                        <button class="absolute top-3 right-3 text-neutral-400 hover:text-white p-1"><i data-lucide="heart" class="w-4 h-4"></i></button>
-                    </div>
-                    <div class="flex justify-between items-start mb-0.5">
-                        <span class="text-[10px] tracking-[0.2em] text-neutral-400 uppercase">ORIENT</span>
-                        <span class="text-xs font-semibold text-white">Rp 4.200.000</span>
-                    </div>
-                    <h3 class="text-xs sm:text-sm font-medium text-white mb-0.5 group-hover:text-[#CBB299] transition">Kamasu Diver Automatic</h3>
-                    <p class="text-[10px] text-neutral-500 mb-2">RA-AA0003R / 2023</p>
-                    <div class="flex items-center gap-3 text-[9px] tracking-wider uppercase text-neutral-400">
-                        <span>VERY GOOD</span>
-                        <span class="flex items-center gap-1 text-neutral-300"><i data-lucide="check-circle" class="w-3 h-3 text-[#CBB299]"></i> VERIFIED</span>
-                    </div>
-                </div>
-
-                <!-- Item Card 4 -->
-                <div class="group cursor-pointer">
-                    <div class="relative bg-[#121212] aspect-[4/5] rounded overflow-hidden border border-neutral-800/80 mb-3">
-                        <img src="https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=800&auto=format&fit=crop" alt="Watch" class="w-full h-full object-cover object-center group-hover:scale-105 transition duration-500">
-                        <span class="absolute top-3 left-3 bg-neutral-950/90 text-white text-[8px] font-bold px-2 py-1 rounded tracking-widest uppercase border border-neutral-800">NEW</span>
-                        <button class="absolute top-3 right-3 text-neutral-400 hover:text-white p-1"><i data-lucide="heart" class="w-4 h-4"></i></button>
-                    </div>
-                    <div class="flex justify-between items-start mb-0.5">
-                        <span class="text-[10px] tracking-[0.2em] text-neutral-400 uppercase">CASIO</span>
-                        <span class="text-xs font-semibold text-white">Rp 850.000</span>
-                    </div>
-                    <h3 class="text-xs sm:text-sm font-medium text-white mb-0.5 group-hover:text-[#CBB299] transition">Vintage Digital Calculator</h3>
-                    <p class="text-[10px] text-neutral-500 mb-2">DBC-32-1A / 2024</p>
-                    <div class="flex items-center gap-3 text-[9px] tracking-wider uppercase text-neutral-400">
-                        <span>UNWORN</span>
-                        <span class="flex items-center gap-1 text-neutral-300"><i data-lucide="check-circle" class="w-3 h-3 text-[#CBB299]"></i> VERIFIED</span>
-                    </div>
-                </div>
-
+                @foreach($watches as $watch)
+                    <a href="{{ route('watch.show', $watch->id) }}" class="group cursor-pointer block">
+                        <div class="relative bg-[#121212] aspect-[4/5] rounded overflow-hidden border border-neutral-800/80 mb-3">
+                            <img src="{{ $watch->image }}" alt="{{ $watch->model_name }}" class="w-full h-full object-cover object-center group-hover:scale-105 transition duration-500">
+                            <span class="absolute top-3 left-3 bg-neutral-950/90 text-white text-[8px] font-bold px-2 py-1 rounded tracking-widest uppercase border border-neutral-800">
+                                {{ $watch->badge }}
+                            </span>
+                            <button class="absolute top-3 right-3 text-neutral-400 hover:text-white p-1" onclick="event.preventDefault();">
+                                <i data-lucide="heart" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                        <div class="flex justify-between items-start mb-0.5">
+                            <span class="text-[10px] tracking-[0.2em] text-neutral-400 uppercase">{{ $watch->brand }}</span>
+                            <span class="text-xs font-semibold text-white">Rp {{ number_format($watch->price, 0, ',', '.') }}</span>
+                        </div>
+                        <h3 class="text-xs sm:text-sm font-medium text-white mb-0.5 group-hover:text-[#CBB299] transition">{{ $watch->model_name }}</h3>
+                        <p class="text-[10px] text-neutral-500 mb-2">{{ $watch->reference_number ?? '-' }} / {{ $watch->year ?? '-' }}</p>
+                        <div class="flex items-center gap-3 text-[9px] tracking-wider uppercase text-neutral-400">
+                            <span>{{ $watch->condition }}</span>
+                            <span class="flex items-center gap-1 text-neutral-300"><i data-lucide="check-circle" class="w-3 h-3 text-[#CBB299]"></i> VERIFIED</span>
+                        </div>
+                    </a>
+                @endforeach
             </div>
+
         </div>
     </section>
 
