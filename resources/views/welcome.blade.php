@@ -8,7 +8,15 @@
     <!-- Vite / Tailwind -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <!-- Google Fonts: Cormorant Garamond (Italic Serif) & Plus Jakarta Sans -->
+    <!-- TAILWIND CSS CDN (Tambahkan baris ini biar CSS-nya langsung jalan 100%) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+      }
+    </script>
+
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,500;1,600&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -25,7 +33,7 @@
         .font-gold-italic {
             font-family: 'Cormorant Garamond', serif;
             font-style: italic;
-            color: #CBB299; /* Exact v0 Champagne Gold Accent */
+            color: #CBB299;
         }
     </style>
 </head>
