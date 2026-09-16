@@ -42,6 +42,7 @@
                             <th class="p-4">Brand</th>
                             <th class="p-4">Harga</th>
                             <th class="p-4">Kondisi</th>
+                            <th class="p-4">Status</th>
                             <th class="p-4">Badge</th>
                             <th class="p-4 text-right">Aksi</th>
                         </tr>
@@ -59,6 +60,13 @@
                             <td class="p-4 font-semibold text-[#CBB299]">{{ $watch->brand }}</td>
                             <td class="p-4 font-medium text-white">Rp {{ number_format($watch->price, 0, ',', '.') }}</td>
                             <td class="p-4"><span class="px-2 py-0.5 border border-neutral-800 rounded text-[9px] uppercase">{{ $watch->condition }}</span></td>
+                            <td class="p-4">
+                                @if(($watch->status ?? 'AVAILABLE') === 'SOLD OUT')
+                                    <span class="px-2 py-0.5 bg-rose-950/80 border border-rose-800 text-rose-400 rounded text-[9px] font-bold uppercase">SOLD OUT</span>
+                                @else
+                                    <span class="px-2 py-0.5 bg-emerald-950/80 border border-emerald-800 text-emerald-400 rounded text-[9px] font-bold uppercase">AVAILABLE</span>
+                                @endif
+                            </td>
                             <td class="p-4"><span class="px-2 py-0.5 bg-neutral-900 border border-neutral-700 rounded text-[9px] uppercase text-white">{{ $watch->badge }}</span></td>
                             <td class="p-4 text-right space-x-2">
                                 <a href="{{ route('admin.watches.edit', $watch->id) }}" class="p-2 inline-block text-neutral-400 hover:text-white"><i data-lucide="edit-3" class="w-4 h-4"></i></a>

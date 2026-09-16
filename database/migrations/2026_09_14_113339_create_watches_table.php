@@ -21,6 +21,7 @@ public function up(): void
         $table->integer('year')->nullable();
         $table->unsignedBigInteger('price');
         $table->string('condition');
+        $table->string('status')->default('AVAILABLE');
         $table->string('badge')->default('VERIFIED');
         $table->string('image');
         

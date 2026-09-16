@@ -28,14 +28,14 @@
     <!-- NAVBAR -->
     <header class="border-b border-neutral-800/60 bg-[#0A0A0A]/90 backdrop-blur-md sticky top-0 z-50">
         <div class="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 h-20 flex items-center justify-between">
-            <a href="/" class="flex items-center gap-3">
+            <a href="{{ route('home') }}" class="flex items-center gap-3">
                 <div class="w-7 h-7 rounded-full border border-neutral-700/80 flex items-center justify-center text-xs font-serif italic text-[#CBB299]">V</div>
                 <div class="flex flex-col">
                     <span class="tracking-[0.25em] text-[11px] font-bold uppercase text-white leading-tight">VALIANT</span>
                     <span class="text-[9px] tracking-[0.2em] text-neutral-400 font-normal leading-tight">TIMEPIECES</span>
                 </div>
             </a>
-            <a href="/" class="inline-flex items-center gap-2 text-[11px] tracking-[0.15em] uppercase text-neutral-400 hover:text-white transition">
+            <a href="{{ route('home') }}" class="inline-flex items-center gap-2 text-[11px] tracking-[0.15em] uppercase text-neutral-400 hover:text-white transition">
                 <i data-lucide="arrow-left" class="w-4 h-4"></i> BACK TO CATALOG
             </a>
         </div>
@@ -47,7 +47,7 @@
             
             <!-- Breadcrumb -->
             <div class="flex items-center gap-2 text-[10px] tracking-[0.2em] uppercase text-neutral-500 mb-8">
-                <a href="/" class="hover:text-white transition">HOME</a>
+                <a href="{{ route('home') }}" class="hover:text-white transition">HOME</a>
                 <span>/</span>
                 <span>{{ $watch->brand }}</span>
                 <span>/</span>
@@ -60,9 +60,19 @@
                 <div class="lg:col-span-7 space-y-4">
                     <div class="bg-[#121212] border border-neutral-800/80 rounded-lg aspect-[4/3] sm:aspect-[4/3] overflow-hidden relative">
                         <img src="{{ $watch->image }}" alt="{{ $watch->model_name }}" class="w-full h-full object-cover object-center">
+                        
                         <span class="absolute top-4 left-4 bg-neutral-950/90 text-white text-[9px] font-bold px-3 py-1.5 rounded tracking-widest uppercase border border-neutral-800">
                             {{ $watch->badge }}
                         </span>
+
+                        @if(($watch->status ?? 'AVAILABLE') === 'SOLD OUT')
+                            <span class="absolute top-4 right-4 bg-rose-950/90 text-rose-400 text-[9px] font-bold px-3 py-1.5 rounded tracking-widest uppercase border border-rose-800/80 z-10">
+                                SOLD OUT
+                            </span>
+                            <div class="absolute inset-0 bg-black/60 backdrop-blur-[1px] flex items-center justify-center">
+                                <span class="text-white text-xs font-bold uppercase tracking-[0.25em] px-4 py-2 border border-white/20 bg-neutral-950/80 rounded">SOLD OUT</span>
+                            </div>
+                        @endif
                     </div>
                 </div>
 
@@ -87,8 +97,12 @@
                             <span class="text-[10px] tracking-widest uppercase text-neutral-500 block mb-1">PRICE</span>
                             <span class="text-2xl font-bold text-white">Rp {{ number_format($watch->price, 0, ',', '.') }}</span>
                         </div>
-                        <div class="flex items-center gap-1 text-[10px] tracking-wider text-[#CBB299] uppercase">
-                            <i data-lucide="check-circle" class="w-4 h-4"></i> AUTHENTICATED
+                        <div class="flex items-center gap-1 text-[10px] tracking-wider uppercase">
+                            @if(($watch->status ?? 'AVAILABLE') === 'SOLD OUT')
+                                <span class="text-rose-400 font-semibold">● SOLD OUT</span>
+                            @else
+                                <span class="text-[#CBB299] flex items-center gap-1"><i data-lucide="check-circle" class="w-4 h-4"></i> AUTHENTICATED</span>
+                            @endif
                         </div>
                     </div>
 
@@ -96,35 +110,42 @@
                     <div>
                         <h3 class="text-xs font-semibold tracking-[0.2em] uppercase text-neutral-300 mb-4 border-b border-neutral-800 pb-2">SPECIFICATIONS</h3>
                         <div class="grid grid-cols-2 gap-4 text-xs">
-    <div class="bg-[#121212] p-3 rounded border border-neutral-800/50">
-        <span class="text-[9px] tracking-widest text-neutral-500 uppercase block">CASE SIZE</span>
-        <span class="text-neutral-200 font-medium">{{ $watch->case_size ?? '38 mm' }}</span>
-    </div>
-    <div class="bg-[#121212] p-3 rounded border border-neutral-800/50">
-        <span class="text-[9px] tracking-widest text-neutral-500 uppercase block">MOVEMENT</span>
-        <span class="text-neutral-200 font-medium">{{ $watch->movement ?? 'Automatic' }}</span>
-    </div>
-    <div class="bg-[#121212] p-3 rounded border border-neutral-800/50">
-        <span class="text-[9px] tracking-widest text-neutral-500 uppercase block">GLASS</span>
-        <span class="text-neutral-200 font-medium">{{ $watch->glass ?? 'Sapphire Crystal' }}</span>
-    </div>
-    <div class="bg-[#121212] p-3 rounded border border-neutral-800/50">
-        <span class="text-[9px] tracking-widest text-neutral-500 uppercase block">COMPLETENESS</span>
-        <span class="text-neutral-200 font-medium">{{ $watch->completeness ?? 'Full Set (Box & Papers)' }}</span>
-    </div>
-</div>
+                            <div class="bg-[#121212] p-3 rounded border border-neutral-800/50">
+                                <span class="text-[9px] tracking-widest text-neutral-500 uppercase block">CASE SIZE</span>
+                                <span class="text-neutral-200 font-medium">{{ $watch->case_size ?? '38 mm' }}</span>
+                            </div>
+                            <div class="bg-[#121212] p-3 rounded border border-neutral-800/50">
+                                <span class="text-[9px] tracking-widest text-neutral-500 uppercase block">MOVEMENT</span>
+                                <span class="text-neutral-200 font-medium">{{ $watch->movement ?? 'Automatic' }}</span>
+                            </div>
+                            <div class="bg-[#121212] p-3 rounded border border-neutral-800/50">
+                                <span class="text-[9px] tracking-widest text-neutral-500 uppercase block">GLASS</span>
+                                <span class="text-neutral-200 font-medium">{{ $watch->glass ?? 'Sapphire Crystal' }}</span>
+                            </div>
+                            <div class="bg-[#121212] p-3 rounded border border-neutral-800/50">
+                                <span class="text-[9px] tracking-widest text-neutral-500 uppercase block">COMPLETENESS</span>
+                                <span class="text-neutral-200 font-medium">{{ $watch->completeness ?? 'Full Set (Box & Papers)' }}</span>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Checkout & Contact Buttons -->
                     <div class="space-y-3 pt-2">
-                        @php
-                            $waMessage = rawurlencode("Halo Valiant Timepieces, aku mau checkout jam tangan *{$watch->brand} {$watch->model_name}* (Rp " . number_format($watch->price, 0, ',', '.') . "). Apakah barang masih ready?");
-                        @endphp
-                        
-                        <!-- Direct WhatsApp Checkout -->
-                        <a href="https://wa.me/6281234567890?text={{ $waMessage }}" target="_blank" class="w-full py-4 rounded-full bg-[#CBB299] text-black text-xs font-bold tracking-[0.15em] uppercase hover:bg-[#d8c3ad] transition flex items-center justify-center gap-3">
-                            <i data-lucide="shopping-bag" class="w-4 h-4"></i> PURCHASE VIA WHATSAPP
-                        </a>
+                        @if(($watch->status ?? 'AVAILABLE') === 'SOLD OUT')
+                            <!-- Disabled Sold Out Button -->
+                            <div class="w-full py-4 rounded-full bg-neutral-900 border border-neutral-800 text-neutral-500 text-xs font-bold tracking-[0.15em] uppercase text-center cursor-not-allowed flex items-center justify-center gap-2">
+                                <i data-lucide="x-circle" class="w-4 h-4 text-rose-500"></i> THIS TIMEPIECE HAS BEEN SOLD
+                            </div>
+                        @else
+                            @php
+                                $waMessage = rawurlencode("Halo Valiant Timepieces, aku mau checkout jam tangan *{$watch->brand} {$watch->model_name}* (Rp " . number_format($watch->price, 0, ',', '.') . "). Apakah barang masih ready?");
+                            @endphp
+                            
+                            <!-- Direct WhatsApp Checkout -->
+                            <a href="https://wa.me/6281234567890?text={{ $waMessage }}" target="_blank" class="w-full py-4 rounded-full bg-[#CBB299] text-black text-xs font-bold tracking-[0.15em] uppercase hover:bg-[#d8c3ad] transition flex items-center justify-center gap-3">
+                                <i data-lucide="shopping-bag" class="w-4 h-4"></i> PURCHASE VIA WHATSAPP
+                            </a>
+                        @endif
                         
                         <a href="https://wa.me/6281234567890?text={{ rawurlencode('Halo Admin, mau tanya detail fisik untuk ' . $watch->brand . ' ' . $watch->model_name) }}" target="_blank" class="w-full py-3.5 rounded-full border border-neutral-800 text-neutral-300 text-xs font-semibold tracking-[0.15em] uppercase hover:border-neutral-600 transition flex items-center justify-center gap-2">
                             <i data-lucide="message-square" class="w-4 h-4 text-neutral-400"></i> ASK A QUESTION

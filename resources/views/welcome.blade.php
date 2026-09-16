@@ -61,7 +61,11 @@
 
             <!-- Desktop Action Buttons -->
             <div class="hidden sm:flex items-center gap-3">
-                <a href="{{ route('login') }}" class="px-5 py-2.5 rounded-full border border-neutral-800 text-[10px] font-semibold tracking-[0.15em] uppercase text-neutral-300 hover:border-neutral-600 transition">SIGN IN</a>
+                @auth
+                    <a href="{{ route('admin.watches.index') }}" class="px-5 py-2.5 rounded-full border border-neutral-800 text-[10px] font-semibold tracking-[0.15em] uppercase text-neutral-300 hover:border-neutral-600 transition">ADMIN PANEL</a>
+                @else
+                    <a href="{{ route('login') }}" class="px-5 py-2.5 rounded-full border border-neutral-800 text-[10px] font-semibold tracking-[0.15em] uppercase text-neutral-300 hover:border-neutral-600 transition">SIGN IN</a>
+                @endauth
                 <a href="https://wa.me/6281234567890?text=Halo%20Valiant%20Timepieces,%20saya%20mau%20titip%20jual%20jam%20tangan." target="_blank" class="px-5 py-2.5 rounded-full bg-[#CBB299] text-black text-[10px] font-semibold tracking-[0.15em] uppercase hover:bg-[#d8c3ad] transition">SELL A WATCH</a>
             </div>
 
@@ -78,7 +82,11 @@
             <a href="#standard" @click="mobileMenu = false" class="block text-xs font-semibold tracking-[0.2em] uppercase text-neutral-300">HOW IT WORKS</a>
             <a href="#" class="block text-xs font-semibold tracking-[0.2em] uppercase text-neutral-300">JOURNAL</a>
             <div class="pt-4 border-t border-neutral-800 flex flex-col gap-3">
-                <a href="{{ route('login') }}" class="text-center w-full py-2.5 rounded-full border border-neutral-800 text-[10px] font-semibold tracking-[0.15em] uppercase text-neutral-300">SIGN IN</a>
+                @auth
+                    <a href="{{ route('admin.watches.index') }}" class="text-center w-full py-2.5 rounded-full border border-neutral-800 text-[10px] font-semibold tracking-[0.15em] uppercase text-neutral-300">ADMIN PANEL</a>
+                @else
+                    <a href="{{ route('login') }}" class="text-center w-full py-2.5 rounded-full border border-neutral-800 text-[10px] font-semibold tracking-[0.15em] uppercase text-neutral-300">SIGN IN</a>
+                @endauth
                 <a href="https://wa.me/6281234567890?text=Halo%20Valiant%20Timepieces,%20saya%20mau%20titip%20jual%20jam%20tangan." target="_blank" class="text-center w-full py-2.5 rounded-full bg-[#CBB299] text-black text-[10px] font-semibold tracking-[0.15em] uppercase">SELL A WATCH</a>
             </div>
         </div>
@@ -132,74 +140,121 @@
                 </p>
             </div>
 
-            <!-- Main Filter Bar -->
-            <div class="bg-[#121212] border border-neutral-800/80 rounded-lg p-2 mb-6 grid grid-cols-1 md:grid-cols-12 gap-2">
-                <div class="md:col-span-6 relative">
-                    <i data-lucide="search" class="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-neutral-500"></i>
-                    <input type="text" placeholder="Search by brand, model, or reference" class="w-full bg-transparent pl-11 pr-4 py-3 text-xs text-white placeholder-neutral-500 focus:outline-none">
+            <!-- FORM FILTER & SEARCH -->
+            <form method="GET" action="{{ route('home') }}#collection" class="mb-6">
+                <div class="bg-[#121212] border border-neutral-800/80 rounded-lg p-2 grid grid-cols-1 md:grid-cols-12 gap-2">
+                    
+                    <!-- Search Input -->
+                    <div class="md:col-span-6 relative">
+                        <i data-lucide="search" class="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-neutral-500"></i>
+                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Search by brand, model, or reference" onchange="this.form.submit()" class="w-full bg-transparent pl-11 pr-4 py-3 text-xs text-white placeholder-neutral-500 focus:outline-none">
+                    </div>
+
+                    <!-- Dropdowns -->
+                    <div class="md:col-span-6 grid grid-cols-1 sm:grid-cols-3 gap-2">
+                        <select name="brand" onchange="this.form.submit()" class="bg-[#181818] border border-neutral-800 text-neutral-300 px-3 py-2.5 rounded text-[10px] uppercase tracking-wider focus:outline-none cursor-pointer">
+                            <option value="">ALL BRANDS</option>
+                            <option value="SEIKO" {{ request('brand') == 'SEIKO' ? 'selected' : '' }}>SEIKO</option>
+                            <option value="CASIO" {{ request('brand') == 'CASIO' ? 'selected' : '' }}>CASIO</option>
+                            <option value="G-SHOCK" {{ request('brand') == 'G-SHOCK' ? 'selected' : '' }}>G-SHOCK</option>
+                            <option value="ALBA" {{ request('brand') == 'ALBA' ? 'selected' : '' }}>ALBA</option>
+                            <option value="ORIENT" {{ request('brand') == 'ORIENT' ? 'selected' : '' }}>ORIENT</option>
+                            <option value="TIMEX" {{ request('brand') == 'TIMEX' ? 'selected' : '' }}>TIMEX</option>
+                            <option value="ROLEX" {{ request('brand') == 'ROLEX' ? 'selected' : '' }}>ROLEX</option>
+                        </select>
+                        <select name="condition" onchange="this.form.submit()" class="bg-[#181818] border border-neutral-800 text-neutral-300 px-3 py-2.5 rounded text-[10px] uppercase tracking-wider focus:outline-none cursor-pointer">
+                            <option value="">ANY CONDITION</option>
+                            <option value="UNWORN" {{ request('condition') == 'UNWORN' ? 'selected' : '' }}>UNWORN</option>
+                            <option value="EXCELLENT" {{ request('condition') == 'EXCELLENT' ? 'selected' : '' }}>EXCELLENT</option>
+                            <option value="VERY GOOD" {{ request('condition') == 'VERY GOOD' ? 'selected' : '' }}>VERY GOOD</option>
+                        </select>
+                        <select name="sort" onchange="this.form.submit()" class="bg-[#181818] border border-neutral-800 text-neutral-300 px-3 py-2.5 rounded text-[10px] uppercase tracking-wider focus:outline-none cursor-pointer">
+                            <option value="latest" {{ request('sort') == 'latest' ? 'selected' : '' }}>RECENTLY ADDED</option>
+                            <option value="price_low" {{ request('sort') == 'price_low' ? 'selected' : '' }}>PRICE: LOW TO HIGH</option>
+                            <option value="price_high" {{ request('sort') == 'price_high' ? 'selected' : '' }}>PRICE: HIGH TO LOW</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="md:col-span-6 grid grid-cols-1 sm:grid-cols-3 gap-2">
-                    <select class="bg-[#181818] border border-neutral-800 text-neutral-300 px-3 py-2.5 rounded text-[10px] uppercase tracking-wider focus:outline-none cursor-pointer">
-                        <option>ALL BRANDS</option>
-                        <option>SEIKO</option>
-                        <option>CASIO</option>
-                        <option>G-SHOCK</option>
-                        <option>ALBA</option>
-                        <option>ORIENT</option>
-                    </select>
-                    <select class="bg-[#181818] border border-neutral-800 text-neutral-300 px-3 py-2.5 rounded text-[10px] uppercase tracking-wider focus:outline-none cursor-pointer">
-                        <option>ANY CONDITION</option>
-                        <option>UNWORN</option>
-                        <option>EXCELLENT</option>
-                        <option>VERY GOOD</option>
-                    </select>
-                    <select class="bg-[#181818] border border-neutral-800 text-neutral-300 px-3 py-2.5 rounded text-[10px] uppercase tracking-wider focus:outline-none cursor-pointer">
-                        <option>RECENTLY ADDED</option>
-                        <option>PRICE: LOW TO HIGH</option>
-                        <option>PRICE: HIGH TO LOW</option>
-                    </select>
-                </div>
-            </div>
+            </form>
 
             <!-- Brand Pills Bar -->
             <div class="flex items-center justify-between gap-4 mb-8 overflow-x-auto pb-2 scrollbar-none">
                 <div class="flex items-center gap-2">
-                    <button class="px-4 py-1.5 rounded-full bg-[#CBB299] text-black text-[10px] font-bold uppercase tracking-widest shrink-0">ALL</button>
-                    <button class="px-4 py-1.5 rounded-full border border-neutral-800 bg-[#121212] hover:border-neutral-600 text-neutral-300 text-[10px] font-medium uppercase tracking-widest shrink-0 transition">SEIKO</button>
-                    <button class="px-4 py-1.5 rounded-full border border-neutral-800 bg-[#121212] hover:border-neutral-600 text-neutral-300 text-[10px] font-medium uppercase tracking-widest shrink-0 transition">CASIO</button>
-                    <button class="px-4 py-1.5 rounded-full border border-neutral-800 bg-[#121212] hover:border-neutral-600 text-neutral-300 text-[10px] font-medium uppercase tracking-widest shrink-0 transition">G-SHOCK</button>
-                    <button class="px-4 py-1.5 rounded-full border border-neutral-800 bg-[#121212] hover:border-neutral-600 text-neutral-300 text-[10px] font-medium uppercase tracking-widest shrink-0 transition">ALBA</button>
-                    <button class="px-4 py-1.5 rounded-full border border-neutral-800 bg-[#121212] hover:border-neutral-600 text-neutral-300 text-[10px] font-medium uppercase tracking-widest shrink-0 transition">ORIENT</button>
+                    @php $currentBrand = request('brand'); @endphp
+                    <a href="{{ route('home', array_merge(request()->except('brand'), ['brand' => ''])) }}#collection" 
+                       class="px-4 py-1.5 rounded-full text-[10px] uppercase tracking-widest shrink-0 transition {{ !$currentBrand ? 'bg-[#CBB299] text-black font-bold' : 'border border-neutral-800 bg-[#121212] text-neutral-300 hover:border-neutral-600 font-medium' }}">
+                        ALL
+                    </a>
+                    @foreach(['SEIKO', 'CASIO', 'G-SHOCK', 'ALBA', 'ORIENT', 'TIMEX', 'ROLEX'] as $b)
+                        <a href="{{ route('home', array_merge(request()->except('brand'), ['brand' => $b])) }}#collection" 
+                           class="px-4 py-1.5 rounded-full text-[10px] uppercase tracking-widest shrink-0 transition {{ strtoupper($currentBrand) === $b ? 'bg-[#CBB299] text-black font-bold' : 'border border-neutral-800 bg-[#121212] text-neutral-300 hover:border-neutral-600 font-medium' }}">
+                            {{ $b }}
+                        </a>
+                    @endforeach
                 </div>
-                <span class="text-[10px] tracking-widest text-neutral-500 uppercase whitespace-nowrap shrink-0">{{ count($watches) }} RESULTS</span>
+                <div class="flex items-center gap-4 shrink-0">
+                    @if(request()->hasAny(['search', 'brand', 'condition', 'sort']))
+                        <a href="{{ route('home') }}#collection" class="text-[10px] tracking-widest text-[#CBB299] hover:underline uppercase">RESET FILTERS</a>
+                    @endif
+                    <span class="text-[10px] tracking-widest text-neutral-500 uppercase whitespace-nowrap">{{ count($watches) }} RESULTS</span>
+                </div>
             </div>
 
             <!-- DYNAMIC PRODUCT GRID -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                @foreach($watches as $watch)
-                    <a href="{{ route('watch.show', $watch->id) }}" class="group cursor-pointer block">
-                        <div class="relative bg-[#121212] aspect-[4/5] rounded overflow-hidden border border-neutral-800/80 mb-3">
-                            <img src="{{ $watch->image }}" alt="{{ $watch->model_name }}" class="w-full h-full object-cover object-center group-hover:scale-105 transition duration-500">
-                            <span class="absolute top-3 left-3 bg-neutral-950/90 text-white text-[8px] font-bold px-2 py-1 rounded tracking-widest uppercase border border-neutral-800">
-                                {{ $watch->badge }}
-                            </span>
-                            <button class="absolute top-3 right-3 text-neutral-400 hover:text-white p-1" onclick="event.preventDefault();">
-                                <i data-lucide="heart" class="w-4 h-4"></i>
-                            </button>
-                        </div>
-                        <div class="flex justify-between items-start mb-0.5">
-                            <span class="text-[10px] tracking-[0.2em] text-neutral-400 uppercase">{{ $watch->brand }}</span>
-                            <span class="text-xs font-semibold text-white">Rp {{ number_format($watch->price, 0, ',', '.') }}</span>
-                        </div>
-                        <h3 class="text-xs sm:text-sm font-medium text-white mb-0.5 group-hover:text-[#CBB299] transition">{{ $watch->model_name }}</h3>
-                        <p class="text-[10px] text-neutral-500 mb-2">{{ $watch->reference_number ?? '-' }} / {{ $watch->year ?? '-' }}</p>
-                        <div class="flex items-center gap-3 text-[9px] tracking-wider uppercase text-neutral-400">
-                            <span>{{ $watch->condition }}</span>
-                            <span class="flex items-center gap-1 text-neutral-300"><i data-lucide="check-circle" class="w-3 h-3 text-[#CBB299]"></i> VERIFIED</span>
-                        </div>
+            @if(count($watches) > 0)
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    @foreach($watches as $watch)
+                        <a href="{{ route('watch.show', $watch->id) }}" class="group cursor-pointer block">
+                            <div class="relative bg-[#121212] aspect-[4/5] rounded overflow-hidden border border-neutral-800/80 mb-3">
+                                <img src="{{ $watch->image }}" alt="{{ $watch->model_name }}" class="w-full h-full object-cover object-center group-hover:scale-105 transition duration-500">
+                                
+                                <span class="absolute top-3 left-3 bg-neutral-950/90 text-white text-[8px] font-bold px-2 py-1 rounded tracking-widest uppercase border border-neutral-800">
+                                    {{ $watch->badge }}
+                                </span>
+
+                                @if(($watch->status ?? 'AVAILABLE') === 'SOLD OUT')
+                                    <span class="absolute top-3 right-3 bg-rose-950/90 text-rose-400 text-[8px] font-bold px-2 py-1 rounded tracking-widest uppercase border border-rose-800/80 z-10">
+                                        SOLD OUT
+                                    </span>
+                                    <div class="absolute inset-0 bg-black/60 backdrop-blur-[1px] flex items-center justify-center">
+                                        <span class="text-white text-xs font-bold uppercase tracking-[0.25em] px-3 py-1 border border-white/20 bg-neutral-950/80 rounded">SOLD OUT</span>
+                                    </div>
+                                @else
+                                    <button class="absolute top-3 right-3 text-neutral-400 hover:text-white p-1" onclick="event.preventDefault();">
+                                        <i data-lucide="heart" class="w-4 h-4"></i>
+                                    </button>
+                                @endif
+                            </div>
+
+                            <div class="flex justify-between items-start mb-0.5">
+                                <span class="text-[10px] tracking-[0.2em] text-neutral-400 uppercase">{{ $watch->brand }}</span>
+                                <span class="text-xs font-semibold text-white">Rp {{ number_format($watch->price, 0, ',', '.') }}</span>
+                            </div>
+                            <h3 class="text-xs sm:text-sm font-medium text-white mb-0.5 group-hover:text-[#CBB299] transition">{{ $watch->model_name }}</h3>
+                            <p class="text-[10px] text-neutral-500 mb-2">{{ $watch->reference_number ?? '-' }} / {{ $watch->year ?? '-' }}</p>
+                            
+                            <div class="flex items-center gap-3 text-[9px] tracking-wider uppercase text-neutral-400">
+                                <span>{{ $watch->condition }}</span>
+                                @if(($watch->status ?? 'AVAILABLE') === 'SOLD OUT')
+                                    <span class="text-rose-400 font-semibold">● SOLD</span>
+                                @else
+                                    <span class="flex items-center gap-1 text-neutral-300"><i data-lucide="check-circle" class="w-3 h-3 text-[#CBB299]"></i> VERIFIED</span>
+                                @endif
+                            </div>
+                        </a>
+                    @endforeach
+                </div>
+            @else
+                <!-- Empty State -->
+                <div class="text-center py-20 bg-[#121212] rounded-lg border border-neutral-800/80">
+                    <i data-lucide="search-x" class="w-10 h-10 text-neutral-600 mx-auto mb-3"></i>
+                    <h3 class="text-sm font-medium text-white uppercase tracking-wider mb-1">No timepieces found</h3>
+                    <p class="text-xs text-neutral-500 mb-4 font-light">Try adjusting your search query or filters.</p>
+                    <a href="{{ route('home') }}#collection" class="inline-block px-5 py-2 rounded-full border border-neutral-700 text-[10px] tracking-widest uppercase text-neutral-300 hover:border-neutral-500 transition">
+                        Reset All Filters
                     </a>
-                @endforeach
-            </div>
+                </div>
+            @endif
 
         </div>
     </section>

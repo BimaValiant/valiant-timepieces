@@ -17,6 +17,8 @@
 
         <form action="{{ route('admin.watches.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4 text-xs">
             @csrf
+            
+            <!-- Brand & Nama Model -->
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label class="block mb-1 text-neutral-400">BRAND</label>
@@ -28,6 +30,7 @@
                 </div>
             </div>
 
+            <!-- Referensi & Tahun -->
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label class="block mb-1 text-neutral-400">NOMOR REFERENSI</label>
@@ -39,7 +42,8 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-3 gap-4">
+            <!-- Harga, Kondisi, Status Stok & Badge -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <div>
                     <label class="block mb-1 text-neutral-400">HARGA (RP)</label>
                     <input type="number" name="price" placeholder="3850000" required class="w-full bg-[#121212] border border-neutral-800 rounded p-3 text-white focus:outline-none focus:border-[#CBB299]">
@@ -53,6 +57,13 @@
                     </select>
                 </div>
                 <div>
+                    <label class="block mb-1 text-neutral-400">STATUS STOK</label>
+                    <select name="status" class="w-full bg-[#121212] border border-neutral-800 rounded p-3 text-white focus:outline-none">
+                        <option value="AVAILABLE">AVAILABLE</option>
+                        <option value="SOLD OUT">SOLD OUT</option>
+                    </select>
+                </div>
+                <div>
                     <label class="block mb-1 text-neutral-400">BADGE</label>
                     <select name="badge" class="w-full bg-[#121212] border border-neutral-800 rounded p-3 text-white focus:outline-none">
                         <option value="VERIFIED">VERIFIED</option>
@@ -63,27 +74,31 @@
                 </div>
             </div>
 
-<div class="grid grid-cols-2 gap-4">
-    <div>
-        <label class="block mb-1 text-neutral-400">UKURAN CASE</label>
-        <input type="text" name="case_size" placeholder="Contoh: 38 mm / 40 mm" class="w-full bg-[#121212] border border-neutral-800 rounded p-3 text-white focus:outline-none focus:border-[#CBB299]">
-    </div>
-    <div>
-        <label class="block mb-1 text-neutral-400">MOVEMENT / MESIN</label>
-        <input type="text" name="movement" placeholder="Contoh: Automatic 6R35 / Quartz" class="w-full bg-[#121212] border border-neutral-800 rounded p-3 text-white focus:outline-none focus:border-[#CBB299]">
-    </div>
-</div>
+            <!-- Case Size & Movement -->
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block mb-1 text-neutral-400">UKURAN CASE</label>
+                    <input type="text" name="case_size" placeholder="Contoh: 38 mm / 40 mm" class="w-full bg-[#121212] border border-neutral-800 rounded p-3 text-white focus:outline-none focus:border-[#CBB299]">
+                </div>
+                <div>
+                    <label class="block mb-1 text-neutral-400">MOVEMENT / MESIN</label>
+                    <input type="text" name="movement" placeholder="Contoh: Automatic 6R35 / Quartz" class="w-full bg-[#121212] border border-neutral-800 rounded p-3 text-white focus:outline-none focus:border-[#CBB299]">
+                </div>
+            </div>
 
-<div class="grid grid-cols-2 gap-4">
-    <div>
-        <label class="block mb-1 text-neutral-400">JENIS KACA</label>
-        <input type="text" name="glass" placeholder="Contoh: Sapphire Crystal / Hardlex" class="w-full bg-[#121212] border border-neutral-800 rounded p-3 text-white focus:outline-none focus:border-[#CBB299]">
-    </div>
-    <div>
-        <label class="block mb-1 text-neutral-400">KELENGKAPAN</label>
-        <input type="text" name="completeness" placeholder="Contoh: Full Set (Box & Papers) / Watch Only" class="w-full bg-[#121212] border border-neutral-800 rounded p-3 text-white focus:outline-none focus:border-[#CBB299]">
-    </div>
-</div>
+            <!-- Glass & Completeness -->
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block mb-1 text-neutral-400">JENIS KACA</label>
+                    <input type="text" name="glass" placeholder="Contoh: Sapphire Crystal / Hardlex" class="w-full bg-[#121212] border border-neutral-800 rounded p-3 text-white focus:outline-none focus:border-[#CBB299]">
+                </div>
+                <div>
+                    <label class="block mb-1 text-neutral-400">KELENGKAPAN</label>
+                    <input type="text" name="completeness" placeholder="Contoh: Full Set (Box & Papers) / Watch Only" class="w-full bg-[#121212] border border-neutral-800 rounded p-3 text-white focus:outline-none focus:border-[#CBB299]">
+                </div>
+            </div>
+
+            <!-- Upload Foto Produk -->
             <div>
                 <label class="block mb-1 text-neutral-400">FOTO PRODUK</label>
                 <input type="file" name="image" required class="w-full bg-[#121212] border border-neutral-800 rounded p-3 text-neutral-400 focus:outline-none">

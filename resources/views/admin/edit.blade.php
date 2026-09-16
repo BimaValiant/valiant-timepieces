@@ -18,6 +18,8 @@
         <form action="{{ route('admin.watches.update', $watch->id) }}" method="POST" enctype="multipart/form-data" class="space-y-4 text-xs">
             @csrf
             @method('PUT')
+
+            <!-- Brand & Nama Model -->
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label class="block mb-1 text-neutral-400">BRAND</label>
@@ -29,6 +31,7 @@
                 </div>
             </div>
 
+            <!-- Referensi & Tahun -->
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label class="block mb-1 text-neutral-400">NOMOR REFERENSI</label>
@@ -40,7 +43,8 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-3 gap-4">
+            <!-- Harga, Kondisi, Status Stok & Badge -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <div>
                     <label class="block mb-1 text-neutral-400">HARGA (RP)</label>
                     <input type="number" name="price" value="{{ $watch->price }}" required class="w-full bg-[#121212] border border-neutral-800 rounded p-3 text-white focus:outline-none focus:border-[#CBB299]">
@@ -54,6 +58,13 @@
                     </select>
                 </div>
                 <div>
+                    <label class="block mb-1 text-neutral-400">STATUS STOK</label>
+                    <select name="status" class="w-full bg-[#121212] border border-neutral-800 rounded p-3 text-white focus:outline-none">
+                        <option value="AVAILABLE" {{ ($watch->status ?? 'AVAILABLE') == 'AVAILABLE' ? 'selected' : '' }}>AVAILABLE</option>
+                        <option value="SOLD OUT" {{ ($watch->status ?? 'AVAILABLE') == 'SOLD OUT' ? 'selected' : '' }}>SOLD OUT</option>
+                    </select>
+                </div>
+                <div>
                     <label class="block mb-1 text-neutral-400">BADGE</label>
                     <select name="badge" class="w-full bg-[#121212] border border-neutral-800 rounded p-3 text-white focus:outline-none">
                         <option value="VERIFIED" {{ $watch->badge == 'VERIFIED' ? 'selected' : '' }}>VERIFIED</option>
@@ -63,27 +74,32 @@
                     </select>
                 </div>
             </div>
-<div class="grid grid-cols-2 gap-4">
-    <div>
-        <label class="block mb-1 text-neutral-400">UKURAN CASE</label>
-        <input type="text" name="case_size" value="{{ $watch->case_size }}" class="w-full bg-[#121212] border border-neutral-800 rounded p-3 text-white focus:outline-none focus:border-[#CBB299]">
-    </div>
-    <div>
-        <label class="block mb-1 text-neutral-400">MOVEMENT / MESIN</label>
-        <input type="text" name="movement" value="{{ $watch->movement }}" class="w-full bg-[#121212] border border-neutral-800 rounded p-3 text-white focus:outline-none focus:border-[#CBB299]">
-    </div>
-</div>
 
-<div class="grid grid-cols-2 gap-4">
-    <div>
-        <label class="block mb-1 text-neutral-400">JENIS KACA</label>
-        <input type="text" name="glass" value="{{ $watch->glass }}" class="w-full bg-[#121212] border border-neutral-800 rounded p-3 text-white focus:outline-none focus:border-[#CBB299]">
-    </div>
-    <div>
-        <label class="block mb-1 text-neutral-400">KELENGKAPAN</label>
-        <input type="text" name="completeness" value="{{ $watch->completeness }}" class="w-full bg-[#121212] border border-neutral-800 rounded p-3 text-white focus:outline-none focus:border-[#CBB299]">
-    </div>
-</div>
+            <!-- Case Size & Movement -->
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block mb-1 text-neutral-400">UKURAN CASE</label>
+                    <input type="text" name="case_size" value="{{ $watch->case_size }}" class="w-full bg-[#121212] border border-neutral-800 rounded p-3 text-white focus:outline-none focus:border-[#CBB299]">
+                </div>
+                <div>
+                    <label class="block mb-1 text-neutral-400">MOVEMENT / MESIN</label>
+                    <input type="text" name="movement" value="{{ $watch->movement }}" class="w-full bg-[#121212] border border-neutral-800 rounded p-3 text-white focus:outline-none focus:border-[#CBB299]">
+                </div>
+            </div>
+
+            <!-- Glass & Completeness -->
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block mb-1 text-neutral-400">JENIS KACA</label>
+                    <input type="text" name="glass" value="{{ $watch->glass }}" class="w-full bg-[#121212] border border-neutral-800 rounded p-3 text-white focus:outline-none focus:border-[#CBB299]">
+                </div>
+                <div>
+                    <label class="block mb-1 text-neutral-400">KELENGKAPAN</label>
+                    <input type="text" name="completeness" value="{{ $watch->completeness }}" class="w-full bg-[#121212] border border-neutral-800 rounded p-3 text-white focus:outline-none focus:border-[#CBB299]">
+                </div>
+            </div>
+
+            <!-- Upload Foto Produk -->
             <div>
                 <label class="block mb-1 text-neutral-400">GANTI FOTO PRODUK (OPSIONAL)</label>
                 <input type="file" name="image" class="w-full bg-[#121212] border border-neutral-800 rounded p-3 text-neutral-400 focus:outline-none">
